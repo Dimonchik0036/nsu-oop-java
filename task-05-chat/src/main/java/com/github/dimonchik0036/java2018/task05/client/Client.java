@@ -1,8 +1,13 @@
+/*
+ * NSU Nsk Java 2018
+ * Created by Dimonchik0036 on 2018/2/18
+ */
+
 package com.github.dimonchik0036.java2018.task05.client;
 
 import com.github.dimonchik0036.java2018.task05.Message;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.io.IOException;
 import java.net.Socket;
 

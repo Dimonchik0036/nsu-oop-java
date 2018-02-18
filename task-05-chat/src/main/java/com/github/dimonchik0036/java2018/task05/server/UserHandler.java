@@ -1,8 +1,16 @@
+/*
+ * NSU Nsk Java 2018
+ * Created by Dimonchik0036 on 2018/2/18
+ */
+
 package com.github.dimonchik0036.java2018.task05.server;
 
 import com.github.dimonchik0036.java2018.task05.Message;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 class UserHandler {

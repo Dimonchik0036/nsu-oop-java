@@ -1,8 +1,25 @@
+/*
+ * NSU Nsk Java 2018
+ * Created by Dimonchik0036 on 2018/2/18
+ */
+
 package com.github.dimonchik0036.java2018.task05.client;
 
+import javax.swing.JTextPane;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
+import javax.swing.JLabel;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridBagLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class ChatFrame extends JFrame {
     private JTextField messageField;
