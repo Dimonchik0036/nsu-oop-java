@@ -1,0 +1,9 @@
+/*
+ * NSU Nsk Java 2018
+ * Created by dimonchik0036 on 2018/02/15
+ */
+
+rootProject.name = 'NSU-labs'
+
+include ':task-05-chat'
+include ':task-01-parser'

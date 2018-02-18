@@ -1,0 +1,31 @@
+/*
+ * NSU Nsk Java 2018
+ * Created by dimonchik0036 on 2018/02/15
+ */
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    group 'com.github.dimonchik0036.java2018'
+}
+
+ext.libsVersions = [
+        junit: '4.12',
+]
+ext.libs = [
+        junit: "junit:junit:${libsVersions.junit}"
+]
+
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    test {
+        testLogging.showStandardStreams = true
+    }
+
+    dependencies {
+        testCompile libs.junit
+    }
+}
