@@ -39,6 +39,7 @@ public class ChatFrame extends JFrame {
         sendButton = new JButton();
         sendButton.setText("Send");
         sendButton.setVerticalAlignment(0);
+
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -48,6 +49,9 @@ public class ChatFrame extends JFrame {
         messageField.setColumns(30);
         messageField.setEditable(true);
         messageField.setEnabled(true);
+
+        JRootPane rootPane = SwingUtilities.getRootPane(sendButton);
+        rootPane.setDefaultButton(sendButton);
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
