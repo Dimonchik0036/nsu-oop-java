@@ -6,6 +6,7 @@
 package com.github.dimonchik0036.java2018.task05.server;
 
 import com.github.dimonchik0036.java2018.task05.Message;
+import com.github.dimonchik0036.java2018.task05.Message.MessageBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +20,7 @@ class UserHandler {
     private final OutputStreamWriter writer;
     private volatile boolean valid;
 
-    private User user = null;
+    private String username = null;
 
     public UserHandler(final Socket socket) throws IOException {
         this.socket = socket;
@@ -30,10 +31,17 @@ class UserHandler {
 
     synchronized public String init() throws IOException {
         Message message = readMessage();
-        String login = message.login;
-        user = new User(login);
+        if (!message.type.equals(Message.TYPE_REGISTRATION)) {
+            sendMessage(new MessageBuilder()
+                    .applyType(Message.TYPE_ERROR)
+                    .applyText("Bad request")
+                    .build());
+            throw new IOException("Bad request");
+        }
 
-        return login;
+        username = message.login;
+
+        return username;
     }
 
     synchronized public void close() {
@@ -42,10 +50,6 @@ class UserHandler {
         } catch (IOException e) {
             System.out.print(e.getMessage());
         }
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public Message readMessage() throws IOException {
@@ -71,5 +75,9 @@ class UserHandler {
 
     public boolean isValid() {
         return valid;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

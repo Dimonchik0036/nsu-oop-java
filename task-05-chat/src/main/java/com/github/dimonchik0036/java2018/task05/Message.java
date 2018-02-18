@@ -9,10 +9,17 @@ import com.google.gson.Gson;
 
 public class Message {
     private static final Gson SERIALIZER = new Gson();
+    public static final String TYPE_REGISTRATION = "registration";
+    public static final String TYPE_SEND_MESSAGE = "send_message";
+    public static final String TYPE_USER_LIST = "user_list";
+    public static final String TYPE_REPLY_HISTORY = "reply_history";
+    public static final String TYPE_ERROR = "error";
 
+    public String type = null;
     public String login = null;
     public String text = null;
-    public boolean config = false;
+    public Boolean config = null;
+    public String[] users = null;
 
     public static class MessageBuilder {
         private Message body;
@@ -21,17 +28,27 @@ public class Message {
             body = new Message();
         }
 
+        public MessageBuilder applyUsersList(final String[] usersList) {
+            body.users = usersList;
+            return this;
+        }
+
+        public MessageBuilder applyType(final String type) {
+            body.type = type;
+            return this;
+        }
+
         public MessageBuilder applyLogin(final String login) {
             body.login = login;
             return this;
         }
 
-        public MessageBuilder applyMessage(final String text) {
+        public MessageBuilder applyText(final String text) {
             body.text = text;
             return this;
         }
 
-        public MessageBuilder applyConfig(final boolean config) {
+        public MessageBuilder applyConfig(final Boolean config) {
             body.config = config;
             return this;
         }
