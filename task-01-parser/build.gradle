@@ -1,0 +1,15 @@
+/*
+ * Task 01 - Parser
+ * NSU Nsk Java 2018
+ * Created by dimonchik0036 on 2018/02/15
+ */
+
+version '1.0'
+
+jar {
+    manifest {
+        attributes  \
+                 'Implementation-Title': 'NSU Nsk Java 2018 Task01 - Parser',
+                'Implementation-Version': version
+    }
+}
