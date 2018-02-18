@@ -1,6 +1,7 @@
 package com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.client;
 
 import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message;
+import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message.MessageBuilder;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -40,7 +41,11 @@ public class Client {
         }
 
         frame = new ChatFrame(login);
-        handler.sendMessage(new Message(login, "", true));
+        handler.sendMessage(new MessageBuilder()
+                .applyLogin(login)
+                .applyConfig(true)
+                .build());
+
         return true;
     }
 
@@ -60,31 +65,34 @@ public class Client {
 
     private void handle() {
         frame.getSendButton().addActionListener(l -> {
-            String textMessage = frame.getText().trim();
-            if (!textMessage.isEmpty()) {
-                handler.sendMessage(new Message(login, textMessage));
-                addMessage(textMessage);
+            String textField = frame.getText().trim();
+            if (!textField.isEmpty()) {
+                Message message = new MessageBuilder()
+                        .applyLogin(login)
+                        .applyMessage(textField)
+                        .build();
+
+                handler.sendMessage(message);
+                updateMessages(message.toString());
             }
 
             frame.getTextField().setText(null);
 
         });
-        while (true) {
-            try {
+
+        try {
+            while (true) {
                 Message message = handler.readMessage();
-                addMessage(message.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-            } catch (ClassNotFoundException e) {
-                System.out.println("Bad response: " + e.getMessage());
+                updateMessages(message.toString());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private void addMessage(final String message) {
+    private void updateMessages(final String newMessage) {
         synchronized (handler) {
-            text += message+'\n';
+            text += newMessage + '\n';
             frame.getMessagesPane().setText(text);
         }
     }

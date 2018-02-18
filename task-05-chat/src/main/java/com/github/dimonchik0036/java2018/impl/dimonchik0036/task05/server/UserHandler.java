@@ -7,22 +7,22 @@ import java.net.Socket;
 
 class UserHandler {
     private final Socket socket;
-    private final ObjectInput objectInput;
-    private final ObjectOutput objectOutput;
+    private final BufferedReader reader;
+    private final OutputStreamWriter writer;
     private volatile boolean valid;
 
     private User user = null;
 
     public UserHandler(final Socket socket) throws IOException {
         this.socket = socket;
-        objectInput = new ObjectInputStream(socket.getInputStream());
-        objectOutput = new ObjectOutputStream(socket.getOutputStream());
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        writer = new OutputStreamWriter(socket.getOutputStream());
         valid = true;
     }
 
-    synchronized public String init() throws IOException, ClassNotFoundException {
-        Message message = (Message) objectInput.readObject();
-        String login = message.getLogin();
+    synchronized public String init() throws IOException {
+        Message message = readMessage();
+        String login = message.login;
         user = new User(login);
 
         return login;
@@ -40,16 +40,21 @@ class UserHandler {
         return user;
     }
 
-    public Message readMessage() throws IOException, ClassNotFoundException {
-        synchronized (objectInput) {
-            return (Message) objectInput.readObject();
+    public Message readMessage() throws IOException {
+        synchronized (reader) {
+            return Message.fromJson(reader.readLine());
         }
     }
 
     public void sendMessage(final Message message) {
-        synchronized (objectOutput) {
+        sendMessage(message.toJson());
+    }
+
+    public void sendMessage(final String json) {
+        synchronized (writer) {
             try {
-                objectOutput.writeObject(message);
+                writer.write(json + "\n");
+                writer.flush();
             } catch (IOException e) {
                 valid = false;
             }
