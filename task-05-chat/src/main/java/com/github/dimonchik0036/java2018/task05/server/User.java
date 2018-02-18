@@ -1,4 +1,4 @@
-package com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.server;
+package com.github.dimonchik0036.java2018.task05.server;
 
 class User {
     private String login;

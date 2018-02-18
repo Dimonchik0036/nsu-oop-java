@@ -1,7 +1,6 @@
-package com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.client;
+package com.github.dimonchik0036.java2018.task05.client;
 
-import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message;
-import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message.MessageBuilder;
+import com.github.dimonchik0036.java2018.task05.Message;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -41,7 +40,7 @@ public class Client {
         }
 
         frame = new ChatFrame(login);
-        handler.sendMessage(new MessageBuilder()
+        handler.sendMessage(new Message.MessageBuilder()
                 .applyLogin(login)
                 .applyConfig(true)
                 .build());
@@ -67,7 +66,7 @@ public class Client {
         frame.getSendButton().addActionListener(l -> {
             String textField = frame.getText().trim();
             if (!textField.isEmpty()) {
-                Message message = new MessageBuilder()
+                Message message = new Message.MessageBuilder()
                         .applyLogin(login)
                         .applyMessage(textField)
                         .build();

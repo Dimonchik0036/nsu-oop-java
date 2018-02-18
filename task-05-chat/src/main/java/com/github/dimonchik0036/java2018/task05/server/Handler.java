@@ -1,7 +1,6 @@
-package com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.server;
+package com.github.dimonchik0036.java2018.task05.server;
 
-import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message;
-import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message.MessageBuilder;
+import com.github.dimonchik0036.java2018.task05.Message;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -41,7 +40,7 @@ class Handler {
         String login = userHandler.getUser().getLogin();
         System.out.println("New user: " + login);
         usersMap.put(userHandler, true);
-        sendOthers(userHandler, new MessageBuilder()
+        sendOthers(userHandler, new Message.MessageBuilder()
                 .applyLogin("Admin")
                 .applyMessage("'" + login + "' connected.")
                 .build());
@@ -59,7 +58,7 @@ class Handler {
         String alert = "'" + login + "' disconnected";
         System.out.println(alert);
 
-        sendOthers(userHandler, new MessageBuilder()
+        sendOthers(userHandler, new Message.MessageBuilder()
                 .applyLogin("Admin")
                 .applyMessage(alert)
                 .build());

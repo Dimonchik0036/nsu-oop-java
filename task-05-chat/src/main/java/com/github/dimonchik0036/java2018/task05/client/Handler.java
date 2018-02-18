@@ -1,7 +1,6 @@
-package com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.client;
+package com.github.dimonchik0036.java2018.task05.client;
 
-import com.github.dimonchik0036.java2018.impl.dimonchik0036.task05.Message;
-import com.google.gson.Gson;
+import com.github.dimonchik0036.java2018.task05.Message;
 
 import java.io.*;
 import java.net.Socket;
