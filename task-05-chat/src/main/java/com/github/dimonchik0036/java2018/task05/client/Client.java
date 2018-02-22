@@ -6,6 +6,7 @@
 package com.github.dimonchik0036.java2018.task05.client;
 
 import com.github.dimonchik0036.java2018.task05.Message;
+import com.sun.istack.internal.NotNull;
 
 import javax.swing.JOptionPane;
 import java.io.IOException;
@@ -82,25 +83,15 @@ public class Client {
             }
 
             frame.getTextField().setText(null);
-
         });
 
-        try {
-            while (true) {
-                Message message = handler.readMessage();
-                handleMessages(message);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (handler.isValid()) {
+            Message message = handler.readMessage();
+            handleMessages(message);
         }
     }
 
-    private void handleMessages(final Message message) {
-        if (message == null) {
-            System.out.println("Empty message");
-            return;
-        }
-
+    private void handleMessages(final @NotNull Message message) {
         System.out.println(message.toJson());
         String type = message.getType();
         if (type == null) {

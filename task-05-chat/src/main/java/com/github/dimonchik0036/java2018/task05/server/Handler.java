@@ -7,10 +7,10 @@ package com.github.dimonchik0036.java2018.task05.server;
 
 import com.github.dimonchik0036.java2018.task05.Message;
 import com.github.dimonchik0036.java2018.task05.Message.MessageBuilder;
+import com.sun.istack.internal.NotNull;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutorService;
@@ -30,8 +30,10 @@ class Handler {
             System.out.print(e.getMessage());
         }
 
-        handleUser(userHandler);
-        removeUser(userHandler);
+        if (userHandler != null) {
+            handleUser(userHandler);
+            removeUser(userHandler);
+        }
     }
 
     private UserHandler addNewUser(final Socket socket) throws IOException {
@@ -57,26 +59,13 @@ class Handler {
         return userHandler;
     }
 
-    private void handleUser(final UserHandler userHandler) {
-        if (userHandler == null) {
-            return;
+    private void handleUser(final @NotNull UserHandler userHandler) {
+        while (userHandler.isValid()) {
+            processingMessage(userHandler);
         }
-
-        try {
-            while (userHandler.isValid()) {
-                processingMessage(userHandler);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-
     }
 
-    private void removeUser(final UserHandler userHandler) {
-        if (userHandler == null) {
-            return;
-        }
+    private void removeUser(final @NotNull UserHandler userHandler) {
         usersMap.remove(userHandler);
 
         String login = userHandler.getUsername();
@@ -102,7 +91,7 @@ class Handler {
                 .build());
     }
 
-    private void processingMessage(final UserHandler userHandler) throws IOException {
+    private void processingMessage(final UserHandler userHandler) {
         Message message = userHandler.readMessage();
         System.out.println(message.toJson());
 
@@ -119,19 +108,18 @@ class Handler {
                 System.out.println("Undefined type: " + type);
                 break;
         }
-
     }
 
-    private void sendToAllUsers(final Message message) {
+    private void sendToAllUsers(final @NotNull Message message) {
         String json = message.toJson();
         sendToAllUsers(json);
     }
 
-    private void sendToAllUsers(final String json) {
+    private void sendToAllUsers(final @NotNull String json) {
         sendToOtherUsers(null, json);
     }
 
-    private void sendToOtherUsers(final UserHandler current, final Message message) {
+    private void sendToOtherUsers(final UserHandler current, final @NotNull Message message) {
         String json = message.toJson();
         if (Message.TYPE_SEND_MESSAGE.equals(message.getType())) {
             history.addMessage(message);

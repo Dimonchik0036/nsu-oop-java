@@ -6,23 +6,28 @@
 package com.github.dimonchik0036.java2018.task05.client;
 
 import com.github.dimonchik0036.java2018.task05.Message;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 class Handler {
     private final Socket socket;
-    private final BufferedReader reader;
+    private final JsonReader reader;
     private final OutputStreamWriter writer;
-    private volatile boolean valid;
+    private volatile boolean valid = true;
 
     Handler(final Socket socket) throws IOException {
         this.socket = socket;
         writer = new OutputStreamWriter(socket.getOutputStream());
-        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        reader = new JsonReader(new BufferedReader(new InputStreamReader(socket.getInputStream())));
     }
 
     public void sendMessage(final Message message) {
@@ -32,7 +37,7 @@ class Handler {
     public void sendMessage(final String message) {
         synchronized (writer) {
             try {
-                writer.write(message + "\n");
+                writer.write(message);
                 writer.flush();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -41,18 +46,17 @@ class Handler {
         }
     }
 
-    public Message readMessage() throws IOException {
-        String json;
-        try {
-            synchronized (reader) {
-                json = reader.readLine();
-            }
-        } catch (IOException e) {
-            valid = false;
-            throw e;
-        }
+    public Message readMessage() {
+        synchronized (reader) {
+            try {
+                return Message.fromJson(reader);
+            } catch (IOException e) {
+                valid = false;
 
-        return Message.fromJson(json);
+                System.out.println(e.getMessage());
+                return Message.EMPTY_MESSAGE;
+            }
+        }
     }
 
     public boolean isValid() {

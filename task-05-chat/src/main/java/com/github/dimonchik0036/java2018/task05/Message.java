@@ -6,17 +6,31 @@
 package com.github.dimonchik0036.java2018.task05;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.stream.JsonReader;
 
-import java.io.Reader;
+import java.io.IOException;
 
 public class Message {
-    private static final Gson SERIALIZER = new Gson();
-
     public static final String TYPE_REGISTRATION = "registration";
     public static final String TYPE_SEND_MESSAGE = "send_message";
     public static final String TYPE_USER_LIST = "user_list";
     public static final String TYPE_REPLY_HISTORY = "reply_history";
+    public static final String TYPE_EMPTY = "empty";
     public static final String TYPE_ERROR = "error";
+    public static final Message EMPTY_MESSAGE = new MessageBuilder().applyType(TYPE_EMPTY).build();
+
+    public static Message fromJson(final JsonReader json) throws IOException {
+        try {
+            return SERIALIZER.fromJson(json, Message.class);
+        } catch (JsonParseException e) {
+            if (e.getCause() instanceof IOException) {
+                throw (IOException) e.getCause();
+            }
+
+            return EMPTY_MESSAGE;
+        }
+    }
 
     public String type;
     public String login;
@@ -73,10 +87,6 @@ public class Message {
         }
     }
 
-    public static Message fromJson(final String json) {
-        return SERIALIZER.fromJson(json, Message.class);
-    }
-
     public String toString() {
         StringBuilder builder = new StringBuilder();
         if (login != null) {
@@ -93,4 +103,6 @@ public class Message {
     public String toJson() {
         return SERIALIZER.toJson(this);
     }
+
+    private static final Gson SERIALIZER = new Gson();
 }
