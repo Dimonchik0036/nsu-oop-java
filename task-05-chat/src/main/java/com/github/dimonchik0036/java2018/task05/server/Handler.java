@@ -106,7 +106,7 @@ class Handler {
         Message message = userHandler.readMessage();
         System.out.println(message.toJson());
 
-        String type = message.type;
+        String type = message.getType();
         if (type == null) {
             return;
         }
@@ -133,7 +133,7 @@ class Handler {
 
     private void sendToOtherUsers(final UserHandler current, final Message message) {
         String json = message.toJson();
-        if (Objects.equals(message.type, Message.TYPE_SEND_MESSAGE)) {
+        if (Message.TYPE_SEND_MESSAGE.equals(message.getType())) {
             history.addMessage(message);
         }
 

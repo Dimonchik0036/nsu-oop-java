@@ -31,7 +31,7 @@ class UserHandler {
 
     synchronized public String init() throws IOException {
         Message message = readMessage();
-        if (!message.type.equals(Message.TYPE_REGISTRATION)) {
+        if (!Message.TYPE_REGISTRATION.equals(message.getType())) {
             sendMessage(new MessageBuilder()
                     .applyType(Message.TYPE_ERROR)
                     .applyText("Bad request")
@@ -39,7 +39,7 @@ class UserHandler {
             throw new IOException("Bad request");
         }
 
-        username = message.login;
+        username = message.getLogin();
 
         return username;
     }

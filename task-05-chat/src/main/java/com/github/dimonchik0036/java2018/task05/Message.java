@@ -7,19 +7,37 @@ package com.github.dimonchik0036.java2018.task05;
 
 import com.google.gson.Gson;
 
+import java.io.Reader;
+
 public class Message {
     private static final Gson SERIALIZER = new Gson();
+
     public static final String TYPE_REGISTRATION = "registration";
     public static final String TYPE_SEND_MESSAGE = "send_message";
     public static final String TYPE_USER_LIST = "user_list";
     public static final String TYPE_REPLY_HISTORY = "reply_history";
     public static final String TYPE_ERROR = "error";
 
-    public String type = null;
-    public String login = null;
-    public String text = null;
-    public Boolean config = null;
-    public String[] users = null;
+    public String type;
+    public String login;
+    public String text;
+    public String[] users;
+
+    public String getType() {
+        return type;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String[] getUsers() {
+        return users;
+    }
 
     public static class MessageBuilder {
         private Message body;
@@ -45,11 +63,6 @@ public class Message {
 
         public MessageBuilder applyText(final String text) {
             body.text = text;
-            return this;
-        }
-
-        public MessageBuilder applyConfig(final Boolean config) {
-            body.config = config;
             return this;
         }
 

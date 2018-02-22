@@ -26,13 +26,6 @@ public class History {
     }
 
     synchronized String getHistory() {
-        String[] messages = new String[history.size()];
-
-        int index = 0;
-        for (final String entry : history) {
-            messages[index++] = entry;
-        }
-
-        return String.join("\n", messages);
+        return String.join("\n", history);
     }
 }

@@ -102,7 +102,7 @@ public class Client {
         }
 
         System.out.println(message.toJson());
-        String type = message.type;
+        String type = message.getType();
         if (type == null) {
             return;
         }
@@ -112,10 +112,10 @@ public class Client {
                 updateMessages(message.toString());
                 break;
             case Message.TYPE_USER_LIST:
-                setOnlineUsers(message.users);
+                setOnlineUsers(message.getUsers());
                 break;
             case Message.TYPE_REPLY_HISTORY:
-                updateMessages(message.text);
+                updateMessages(message.getText());
                 break;
             default:
                 System.out.println("Undefined type: " + type);
