@@ -4,7 +4,7 @@
  * Created by dimonchik0036 on 2018/02/08
  */
 
-package main.java.com.github.dimonchik0036.java2018.impl.dimonchik0036.task01;
+package com.github.dimonchik0036.java2018.impl.dimonchik0036.task01;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,10 +15,10 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 
-public class  CSVParser {
+public class CsvParser {
     private final Scanner scanner;
 
-    public CSVParser(final Readable input) {
+    public CsvParser(final Readable input) {
         Pattern pattern = Pattern.compile("[^\\p{L}\\d]+");
         scanner = new Scanner(input);
         scanner.useDelimiter(pattern);
@@ -36,9 +36,9 @@ public class  CSVParser {
             System.exit(1);
         }
 
-        CSVParser parser = null;
+        CsvParser parser = null;
         try {
-            parser = new CSVParser(new BufferedReader(new FileReader(args[0])));
+            parser = new CsvParser(new BufferedReader(new FileReader(args[0])));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.exit(1);
