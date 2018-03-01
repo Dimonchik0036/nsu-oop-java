@@ -6,17 +6,13 @@
 package com.github.dimonchik0036.java2018.task05.client;
 
 import com.github.dimonchik0036.java2018.task05.Message;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.net.SocketException;
 
 class Handler {
     private final Socket socket;

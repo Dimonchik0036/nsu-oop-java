@@ -7,8 +7,6 @@ package com.github.dimonchik0036.java2018.task05.server;
 
 import com.github.dimonchik0036.java2018.task05.Message;
 import com.github.dimonchik0036.java2018.task05.Message.MessageBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 import java.io.BufferedReader;
@@ -23,7 +21,7 @@ class UserHandler {
     private final OutputStreamWriter writer;
     private volatile boolean valid;
 
-    private String username = null;
+    private String username;
 
     public UserHandler(final Socket socket) throws IOException {
         this.socket = socket;
